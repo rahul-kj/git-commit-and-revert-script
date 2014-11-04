@@ -33,29 +33,29 @@ function help() {
 }
 
 function add_feature() {
-	cp code_staging/feature/* . > /dev/null
-	git add * > /dev/null
-	git commit -m "Adding the feature" > /dev/null
-	git push origin master > /dev/null
+	cp code_staging/feature/* .
+	git add *
+	git commit -m "Adding the feature"
+	git push origin master
 	logSuccess "Feature added and committed"
 	
 	help
 }
 
 function add_feature_fix() {
-	cp code_staging/fix/* . > /dev/null
-	git add * > /dev/null
-	git commit -m "Adding the feature fix" > /dev/null
-	git push origin master > /dev/null
+	cp code_staging/fix/* .
+	git add *
+	git commit -m "Adding the feature fix"
+	git push origin master
 	logSuccess "Feature fix added and committed"
 	
 	help
 }
 
 function reset() {
-	git reset --hard $INITIAL_GIT_TAG > /dev/null
-	git commit -m "Resetting post demo" > /dev/null
-	git push origin master --force > /dev/null
+	git reset --hard $INITIAL_GIT_TAG
+	git commit -m "Resetting post demo"
+	git push origin master --force
 	logSuccess "Done with branch reset"
 	
 	help
