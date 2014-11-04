@@ -9,54 +9,70 @@ function help() {
 	printf " %s \t %s \n" "3" "Reset environment"
 	printf " %s \t %s \n" "4" "Exit"
 	
-	echo "Please enter your option:"
+	echo -e "Please enter your option: \c"
 	read OPTION
 
 	case $OPTION in
 	1 )
-		echo "Feature is being added"
+		logInfo "Feature is being added"
 		add_feature
-		echo "Feature added and committed"
 		;;
 	2 )
-		echo "Feature fix is being added"
+		logInfo "Feature fix is being added"
 		add_feature_fix
-		echo "Feature fix added and committed"		
 		;;
 	3 )
-		echo "Resetting the branch"		
-		reset
-		echo "Done with branch reset"				
+		logInfo "Resetting the branch"		
+		reset				
 		;;
 	4 )
-		echo "Have a good day!"			
+		logSuccess "Have a good day!"			
 		exit 0
 		;;
 	esac	
 }
 
 function add_feature() {
-	cp code_dump/feature/* .
-	git add *
-	git commit -m "Adding the feature"
-	git push origin master
+	cp code_staging/feature/* . > /dev/null
+	git add * > /dev/null
+	git commit -m "Adding the feature" > /dev/null
+	git push origin master > /dev/null
+	logSuccess "Feature added and committed"
+	
 	help
 }
 
 function add_feature_fix() {
-	cp code_dump/fix/* .
-	git add *
-	git commit -m "Adding the feature fix"
-	git push origin master
+	cp code_staging/fix/* . > /dev/null
+	git add * > /dev/null
+	git commit -m "Adding the feature fix" > /dev/null
+	git push origin master > /dev/null
+	logSuccess "Feature fix added and committed"
+	
 	help
 }
 
 function reset() {
-	cp code_dump/feature/* .
-	git reset --hard $INITIAL_GIT_TAG
-	git commit -m "Resetting post demo"
-	git push origin master --force
+	git reset --hard $INITIAL_GIT_TAG > /dev/null
+	git commit -m "Resetting post demo" > /dev/null
+	git push origin master --force > /dev/null
+	logSuccess "Done with branch reset"
+	
 	help
+}
+
+logSuccess () {
+	logCustom 2 "$1"	
+}
+
+logInfo () {
+	logCustom 3 "$1"
+}
+
+logCustom () {
+	tput setaf $1
+	echo "$2"
+	tput sgr 0	
 }
 
 help				
